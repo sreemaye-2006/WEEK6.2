@@ -11,7 +11,7 @@ const app = exp();
 // CORS middleware - allows both local dev and deployed frontend
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: "https://week6-2-1.onrender.com",
     credentials: true,
   })
 );
