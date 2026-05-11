@@ -13,7 +13,7 @@ const app = exp();
 
 app.use(
   cors({
-    origin: "https://week-6-2-1hde8soh5-sirisreemaye-9168s-projects.vercel.app",
+    origin: "https://week-6-2-git-main-sirisreemaye-9168s-projects.vercel.app",
     credentials: true,
   })
 );
