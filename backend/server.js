@@ -9,9 +9,11 @@ dotenv.config();
 const app = exp();
 
 // CORS middleware - allows both local dev and deployed frontend
+
+
 app.use(
   cors({
-    origin: "https://week6-2-1.onrender.com",
+    origin: "https://week-6-2-1hde8soh5-sirisreemaye-9168s-projects.vercel.app",
     credentials: true,
   })
 );
