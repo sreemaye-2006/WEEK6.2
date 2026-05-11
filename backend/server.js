@@ -2,36 +2,49 @@ import exp from "express";
 import { connect } from "mongoose";
 import { empRoute } from "./API/empApp.js";
 import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = exp();
-//add cors middleware
+
+// CORS middleware - allows both local dev and deployed frontend
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
-  }),
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    credentials: true,
+  })
 );
-//body parser middleware
+
+// body parser middleware
 app.use(exp.json());
-//emp api middleware
+
+// emp api middleware
 app.use("/emp-api", empRoute);
 
-//DB connection
+// test route
+app.get("/", (req, res) => {
+  res.send("Backend is running successfully");
+});
+
+// DB connection
 const connectDB = async () => {
   try {
-    await connect("mongodb://localhost:27017/empdb");
+    await connect(process.env.MONGO_URL);
     console.log("DB connected");
-    app.listen(4000, () => console.log("server listening on port 4000.."));
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => console.log(`Server listening on port ${PORT}..`));
   } catch (err) {
-    console.log("err in DB connection", err.message);
+    console.log("Error in DB connection:", err.message);
+    process.exit(1);
   }
 };
 
 connectDB();
 
-//error handling middleware
+// error handling middleware
 app.use((err, req, res, next) => {
   console.log("err in middleware:", err.message);
-
   res.status(err.status || 500).json({
     message: "error",
     reason: err.message,

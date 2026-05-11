@@ -13,14 +13,14 @@ const { state } = useLocation();
     navigate("/editEmployee",{state: empObj});
   };
 const deleteEmpById=async(id)=>{
-  let res= await axios.delete(`http://localhost:4000/emp-api/employees/${id}`)
+  let res= await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/emp-api/employees/${id}`)
   //get lateset emp data
   if (res.status===200){
     getEmps();
   }
 } 
   async function getEmps() {
-      let res = await fetch("http://localhost:4000/emp-api/employees");
+      let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/emp-api/employees`);
       if (res.status === 200) {
         let resObj = await res.json();
         setEmps(resObj.payload);
